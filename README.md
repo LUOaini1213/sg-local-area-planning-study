@@ -198,3 +198,6 @@ baseline: 89 tests pass
 ```
 
 With the real test restored, the same mutant is killed (exit 0). The full run of all 28 mutants is part of CI.
+The first CI run caught a real weakness: mutant 24 (rank order reversed) survived, because the test's study area
+ranked in the middle under either order. The test now also checks an area that ranks first, and all 28 mutants
+are killed.

@@ -351,6 +351,9 @@ def test_ratio_and_compare():
     # park m2 per resident 2.0, 0.5, 3.0 -> median 2.0 ; W rank 2 (higher is better)
     assert c.loc["park_m2_per_resident", "island_median"] == pytest.approx(2.0)
     assert c.loc["park_m2_per_resident", "rank"] == 2
+    # W sits in the middle either way; Y is best on both, so a reversed ranking would put it last
+    cy = ratios.compare(t, "Y", ["per_hawker", "park_m2_per_resident"], 10000).set_index("metric")
+    assert cy.loc["per_hawker", "rank"] == 1 and cy.loc["park_m2_per_resident", "rank"] == 1
 
 
 def test_counts_within_polygon():
