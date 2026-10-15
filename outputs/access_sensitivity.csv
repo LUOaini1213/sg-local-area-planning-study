@@ -1,0 +1,16 @@
+kind,threshold_m,study_area
+mrt_exit,600,0.1180
+mrt_exit,800,0.2422
+mrt_exit,1000,0.4367
+park,600,0.1176
+park,800,0.1995
+park,1000,0.3454
+hawker,600,0.3267
+hawker,800,0.5013
+hawker,1000,0.6504
+clinic,600,0.8128
+clinic,800,0.9636
+clinic,1000,0.9849
+community_club,600,0.2163
+community_club,800,0.3564
+community_club,1000,0.5425

@@ -1,0 +1,15 @@
+metric,study_area,island_median,rank,of,better_is
+per_hawker,24316.6667,50632.5000,13,32,lower
+per_clinic,2805.7692,3849.0027,8,32,lower
+per_community_club,36475.0000,36992.5000,16,32,lower
+per_primary_school,1753.3333,2151.2121,8,32,lower
+park_m2_per_resident,11.7579,2.4962,6,32,higher
+within_bus_stop,0.8394,0.8479,18,32,higher
+within_mrt_exit,0.2422,0.4824,29,32,higher
+within_park,0.1995,0.6652,32,32,higher
+within_park_zoned,0.9962,0.9892,13,32,higher
+within_hawker,0.5013,0.2604,10,32,higher
+within_clinic,0.9636,0.8586,3,32,higher
+within_community_club,0.3564,0.3880,19,32,higher
+within_primary_school,0.6874,0.6593,16,32,higher
+within_mrt_future,0.8038,0.5945,11,32,higher

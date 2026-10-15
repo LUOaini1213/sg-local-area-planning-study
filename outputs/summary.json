@@ -1,0 +1,391 @@
+{
+  "network": {
+    "nodes_kept": 676857,
+    "share_nodes_in_largest_component": 0.8749
+  },
+  "circuity_study_area": 1.496111882979315,
+  "zoned_res_gfa_m2_per_resident": 61.927972829343624,
+  "study_area": "JURONG EAST",
+  "residents_study_area": 72960.00000000001,
+  "residents_island": 4204560.000000002,
+  "origin_points_study_area": 9367,
+  "residents_snapped_beyond_150m": 0.04918032786885246,
+  "coverage_study_area": {
+    "bus_stop": 0.8393539254396756,
+    "mrt_exit": 0.24215972121101367,
+    "park": 0.19948124605797657,
+    "park_zoned": 0.9962250558671274,
+    "hawker": 0.5012971106148986,
+    "clinic": 0.9635864248925519,
+    "community_club": 0.35637166034833917,
+    "primary_school": 0.6874471188936169
+  },
+  "coverage_mrt_future": 0.8037731622140734,
+  "residents_two_or_more_neighbourhood_gaps": 32727.256936281457,
+  "coverage_cc_with_jurong_gateway_hub": 0.3712358251143909,
+  "future_stations_used": [
+    "BAHAR JUNCTION",
+    "BUKIT BATOK WEST",
+    "CORPORATION",
+    "ENTERPRISE",
+    "HONG KAH",
+    "JURONG HILL",
+    "JURONG LAKE DISTRICT",
+    "JURONG PIER",
+    "JURONG TOWN HALL",
+    "JURONG WEST",
+    "PANDAN RESERVOIR",
+    "TENGAH",
+    "TENGAH PARK",
+    "TENGAH PLANTATION",
+    "TOH GUAN",
+    "TUKANG",
+    "WEST COAST"
+  ],
+  "scenario": {
+    "gpr_central_sdp": 2.8,
+    "gpr_intensified": 5.3,
+    "circuity": 1.496111882979315,
+    "zoned_res_gfa_m2_per_resident": 61.927972829343624,
+    "plots": [
+      {
+        "plot": "plot1",
+        "subzone": "JURONG RIVER",
+        "lu_mp2025": "RESIDENTIAL",
+        "gpr_mp2025": "3.5",
+        "area_ha": 38.00481131679831,
+        "residents_2025": 10.0,
+        "gpr_central": 3.5,
+        "net_share_central": 1.0,
+        "gfa_m2_central": 1330168.3960879408,
+        "residents_central": 21479.28206456099,
+        "dwellings_plan_capacity": 13301.683960879407,
+        "residents_plan_capacity": 40703.15292029099,
+        "gpr_intensified": 5.3,
+        "residents_intensified": 32525.76998347807,
+        "residents_range": [
+          21479.28206456099,
+          72513.17999245116
+        ],
+        "median_walk_today_m": {
+          "bus_stop": 376.7756069741662,
+          "mrt_exit": 2916.751656911244,
+          "park": 1873.255341822427,
+          "park_zoned": 460.1541858840653,
+          "hawker": 1388.0353811317293,
+          "clinic": 727.1631323305418,
+          "community_club": 1799.8346962541134,
+          "primary_school": 3119.6737535891602,
+          "mrt_future": 907.4971782260234
+        },
+        "share_within_today": {
+          "bus_stop": 0.5531914893617021,
+          "mrt_exit": 0.0,
+          "park": 0.0,
+          "park_zoned": 0.839607201309329,
+          "hawker": 0.0,
+          "clinic": 0.5941080196399345,
+          "community_club": 0.0,
+          "primary_school": 0.0,
+          "mrt_future": 0.3469721767594108
+        },
+        "median_walk_if_connected_m": {
+          "bus_stop": 334.4618607055097,
+          "mrt_exit": 2137.0647325622404,
+          "park": 902.490604825487,
+          "park_zoned": 477.7146521282327,
+          "hawker": 1395.87871382006,
+          "clinic": 736.195575987659,
+          "community_club": 2155.4571209766978,
+          "primary_school": 2369.710096873021,
+          "mrt_future": 1029.784134764756
+        },
+        "share_within_if_connected": {
+          "bus_stop": 0.6317512274959084,
+          "mrt_exit": 0.0,
+          "park": 0.37315875613747956,
+          "park_zoned": 0.9803600654664485,
+          "hawker": 0.0,
+          "clinic": 0.6366612111292962,
+          "community_club": 0.0,
+          "primary_school": 0.0,
+          "mrt_future": 0.3404255319148936
+        }
+      },
+      {
+        "plot": "plot2",
+        "subzone": "JURONG RIVER",
+        "lu_mp2025": "RESIDENTIAL",
+        "gpr_mp2025": "SDP",
+        "area_ha": 21.2316208060964,
+        "residents_2025": 0.0,
+        "gpr_central": 2.8,
+        "net_share_central": 0.75,
+        "gfa_m2_central": 445864.0369280244,
+        "residents_central": 7199.719554145627,
+        "dwellings_plan_capacity": 4458.640369280244,
+        "residents_plan_capacity": 13643.439529997548,
+        "gpr_intensified": 5.3,
+        "residents_intensified": 13628.040584632792,
+        "residents_range": [
+          7199.719554145627,
+          40509.93249803193
+        ],
+        "median_walk_today_m": {
+          "bus_stop": 669.9437935785757,
+          "mrt_exit": 3086.9003508596415,
+          "park": 955.0287638702914,
+          "park_zoned": 978.2927072152175,
+          "hawker": 2141.796529586906,
+          "clinic": 1565.5228939634183,
+          "community_club": 2211.0014212159444,
+          "primary_school": 2784.560348090494,
+          "mrt_future": 2708.213770187276
+        },
+        "share_within_today": {
+          "bus_stop": 0.07079646017699115,
+          "mrt_exit": 0.0,
+          "park": 0.1710914454277286,
+          "park_zoned": 0.14454277286135694,
+          "hawker": 0.0,
+          "clinic": 0.0,
+          "community_club": 0.0,
+          "primary_school": 0.0,
+          "mrt_future": 0.0
+        },
+        "median_walk_if_connected_m": {
+          "bus_stop": 387.9157605441152,
+          "mrt_exit": 2534.1182211346404,
+          "park": 505.01096571548834,
+          "park_zoned": 502.3167770644556,
+          "hawker": 2041.7342866097156,
+          "clinic": 1308.5614085901977,
+          "community_club": 2335.360991956086,
+          "primary_school": 2317.1743697644097,
+          "mrt_future": 1467.3970951132092
+        },
+        "share_within_if_connected": {
+          "bus_stop": 0.5398230088495575,
+          "mrt_exit": 0.0,
+          "park": 0.9882005899705014,
+          "park_zoned": 0.9882005899705014,
+          "hawker": 0.0,
+          "clinic": 0.0,
+          "community_club": 0.0,
+          "primary_school": 0.0,
+          "mrt_future": 0.0
+        }
+      },
+      {
+        "plot": "plot3",
+        "subzone": "TOH GUAN",
+        "lu_mp2025": "RESIDENTIAL",
+        "gpr_mp2025": "SDP",
+        "area_ha": 3.609648706549796,
+        "residents_2025": 0.0,
+        "gpr_central": 2.8,
+        "net_share_central": 0.75,
+        "gfa_m2_central": 75802.62283754571,
+        "residents_central": 1224.0449569766604,
+        "dwellings_plan_capacity": 758.0262283754571,
+        "residents_plan_capacity": 2319.560258828899,
+        "gpr_intensified": 5.3,
+        "residents_intensified": 2316.942239991536,
+        "residents_range": [
+          1224.0449569766604,
+          6887.2097320970115
+        ],
+        "median_walk_today_m": {
+          "bus_stop": 445.4029194967428,
+          "mrt_exit": 770.9010866003637,
+          "park": 2027.6490699095548,
+          "park_zoned": 165.21312918349165,
+          "hawker": 1618.1632430399088,
+          "clinic": 710.5062221143678,
+          "community_club": 1493.1143066823568,
+          "primary_school": 1157.9651158079678,
+          "mrt_future": 615.8598543672747
+        },
+        "share_within_today": {
+          "bus_stop": 0.36363636363636365,
+          "mrt_exit": 0.5818181818181818,
+          "park": 0.0,
+          "park_zoned": 1.0,
+          "hawker": 0.0,
+          "clinic": 0.9818181818181818,
+          "community_club": 0.0,
+          "primary_school": 0.05454545454545454,
+          "mrt_future": 0.9454545454545454
+        },
+        "median_walk_if_connected_m": {
+          "bus_stop": 354.66982459008955,
+          "mrt_exit": 763.06343638337,
+          "park": 2021.919491838266,
+          "park_zoned": 155.23864875077464,
+          "hawker": 1723.18551173399,
+          "clinic": 641.9258945374575,
+          "community_club": 1516.77167677079,
+          "primary_school": 1257.3733237115816,
+          "mrt_future": 692.4804343481027
+        },
+        "share_within_if_connected": {
+          "bus_stop": 0.8181818181818182,
+          "mrt_exit": 0.6,
+          "park": 0.0,
+          "park_zoned": 1.0,
+          "hawker": 0.0,
+          "clinic": 0.8909090909090909,
+          "community_club": 0.0,
+          "primary_school": 0.0,
+          "mrt_future": 0.7818181818181819
+        }
+      },
+      {
+        "plot": "plot4",
+        "subzone": "YUHUA EAST",
+        "lu_mp2025": "RESIDENTIAL",
+        "gpr_mp2025": "3.5",
+        "area_ha": 3.0265592368224232,
+        "residents_2025": 0.0,
+        "gpr_central": 3.5,
+        "net_share_central": 1.0,
+        "gfa_m2_central": 105929.57328878481,
+        "residents_central": 1710.5286746701274,
+        "dwellings_plan_capacity": 1059.295732887848,
+        "residents_plan_capacity": 3241.444942636815,
+        "gpr_intensified": 5.3,
+        "residents_intensified": 2590.2291359290502,
+        "residents_range": [
+          1710.5286746701274,
+          5774.675023857183
+        ],
+        "median_walk_today_m": {
+          "bus_stop": 310.07537205443987,
+          "mrt_exit": 977.7146813088043,
+          "park": 1321.8963270771037,
+          "park_zoned": 249.68364714414508,
+          "hawker": 648.2412379657073,
+          "clinic": 280.0987825025751,
+          "community_club": 708.4888157746855,
+          "primary_school": 628.1866390557877,
+          "mrt_future": 383.84384701736917
+        },
+        "share_within_today": {
+          "bus_stop": 0.9791666666666666,
+          "mrt_exit": 0.0,
+          "park": 0.0,
+          "park_zoned": 1.0,
+          "hawker": 0.6875,
+          "clinic": 1.0,
+          "community_club": 0.875,
+          "primary_school": 1.0,
+          "mrt_future": 1.0
+        },
+        "median_walk_if_connected_m": {
+          "bus_stop": 236.26854529177547,
+          "mrt_exit": 1024.1547308047802,
+          "park": 1230.331664186261,
+          "park_zoned": 241.26542441050321,
+          "hawker": 589.7087179052671,
+          "clinic": 211.47278399425971,
+          "community_club": 432.63269686179194,
+          "primary_school": 474.4755444947008,
+          "mrt_future": 452.5456858626691
+        },
+        "share_within_if_connected": {
+          "bus_stop": 1.0,
+          "mrt_exit": 0.0,
+          "park": 0.0,
+          "park_zoned": 1.0,
+          "hawker": 1.0,
+          "clinic": 1.0,
+          "community_club": 1.0,
+          "primary_school": 1.0,
+          "mrt_future": 1.0
+        }
+      }
+    ],
+    "combined_residents_central": 31613.575250353402,
+    "combined_residents_intensified": 51060.981944031446,
+    "load_change_top": {
+      "hawker": [
+        {
+          "name": "Teban Gardens Road Blk 37A (Teban Gardens Market and Food Centre)",
+          "before": 19405.15168342803,
+          "after": 45004.62723915216,
+          "change_pct": 131.92102784533267,
+          "after_intensified": 59729.85934660732,
+          "change_pct_intensified": 207.80413531947048
+        },
+        {
+          "name": "Taman Jurong Market and Food Centre",
+          "before": 33489.27038158515,
+          "after": 36568.7964445678,
+          "change_pct": 9.195560332887993,
+          "after_intensified": 39318.373286516566,
+          "change_pct_intensified": 17.405882058680753
+        },
+        {
+          "name": "Jurong East Street 24 Blk 254 (Yuhua Village Market and Food Centre)",
+          "before": 59319.99494715789,
+          "after": 62254.568578804676,
+          "change_pct": 4.947022726925213,
+          "after_intensified": 64227.16632307846,
+          "change_pct_intensified": 8.272373219673856
+        }
+      ],
+      "clinic": [
+        {
+          "name": "TEBAN GARDEN CLINIC",
+          "before": 5597.999437324029,
+          "after": 31749.66587330715,
+          "change_pct": 467.1609336296077,
+          "after_intensified": 46967.92555242207,
+          "change_pct_intensified": 739.0126879840097
+        },
+        {
+          "name": "Healthway Medical",
+          "before": 600.218829574005,
+          "after": 1601.710158009455,
+          "change_pct": 166.85436695583863,
+          "after_intensified": 2495.898844112533,
+          "change_pct_intensified": 315.8314803092656
+        },
+        {
+          "name": "DOCTORS KOO, LOH & ASSOCIATES (PTE) LTD",
+          "before": 6618.644723069969,
+          "after": 9145.97990579366,
+          "change_pct": 38.18508604812106,
+          "after_intensified": 11402.529176082648,
+          "change_pct_intensified": 72.27891287680023
+        }
+      ],
+      "community_club": [
+        {
+          "name": "Ayer Rajah CC",
+          "before": 28433.69785630022,
+          "after": 49365.15482361443,
+          "change_pct": 73.61496585178176,
+          "after_intensified": 60162.06468884146,
+          "change_pct_intensified": 111.58719837599669
+        },
+        {
+          "name": "Taman Jurong CC",
+          "before": 34339.80569986814,
+          "after": 41454.57281089703,
+          "change_pct": 20.718716853590717,
+          "after_intensified": 47807.04344574427,
+          "change_pct_intensified": 39.217571187153915
+        },
+        {
+          "name": "Yuhua CC",
+          "before": 45787.33477768101,
+          "after": 49354.685949691295,
+          "change_pct": 7.791130864749929,
+          "after_intensified": 51652.712143294884,
+          "change_pct_intensified": 12.810043201014059
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+data/raw/
+data/work/
+data/fetch.log
+__pycache__/
+*.pyc
+.pytest_cache/
+report/brief.html
