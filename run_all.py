@@ -1,7 +1,8 @@
 """One command: python run_all.py  (add --fetch to download the inputs first).
 
 Steps: fetch inputs -> walk network -> resident origins -> walking distances -> land use, coverage, ratios, gaps
--> intensification scenario -> figures -> planning brief (markdown tables refreshed, PDF rebuilt).
+-> intensification scenario -> figures -> planning brief PDF. The brief text (report/brief.md) is written by hand
+from the outputs and is not changed here; only the PDF is re-typeset from it.
 """
 import sys
 import time
