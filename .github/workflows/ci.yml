@@ -2,7 +2,11 @@ name: tests
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -11,5 +15,17 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Unit tests and report-number checks
         run: python -m pytest -q tests
+      - name: Package imports as the README says (pip install -e . then python -m lap.fetch)
+        run: |
+          pip install -e .
+          python -c "import lap.fetch, lap.pipeline"
+  mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
       - name: Mutation check (every planted bug must fail the tests)
         run: python tests/mutate.py

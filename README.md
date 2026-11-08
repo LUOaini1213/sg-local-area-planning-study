@@ -1,17 +1,18 @@
 # Jurong East local area planning study
 
-This is a reproducible local-area study of **Jurong East**, built from public Singapore data. It produces a
-planning brief in the style of a planning agency's local-area brief, as an 8-page PDF:
-[`report/brief.pdf`](report/brief.pdf) (source: [`report/brief.md`](report/brief.md)).
+A reproducible study of **Jurong East** built from public Singapore data: land use and floor area under Master
+Plan 2019 and 2025, walking access over the OpenStreetMap path network, gaps against the island-wide median, and a
+build-out test of the residential land the plan zones but nobody yet lives on. The output is an 8-page planning
+brief, [`report/brief.pdf`](report/brief.pdf) (source: [`report/brief.md`](report/brief.md)), with every result
+table in [`outputs/`](outputs/).
 
-The study covers:
-
-- land-use mix and floor-area potential by subzone, under Master Plan 2019 and Master Plan 2025;
-- walking access over the OpenStreetMap path network to rail, buses, parks, hawker centres, clinics, community
-  clubs and primary schools;
-- where residents fall outside walking thresholds;
-- Jurong East against the island-wide median;
-- a build-out and intensification test for the residential land the plan zones but nobody yet lives on.
+- **Found:** 24 % of residents live within 800 m of an MRT exit (median 48 %), and 80 % will once the JRL and CRL
+  stations open; 45 % are beyond the threshold for two or more of five neighbourhood facilities; building the four
+  unoccupied residential plots adds about 31,600 residents, mostly beyond walking distance of a hawker centre,
+  community club or primary school.
+- **Limits:** residents are placed by zoning and floor area, not by block; OpenStreetMap under-maps covered
+  linkways; the scenario tests the zoning and is not a forecast; CI checks the code and the committed outputs but
+  does not download the data or rerun the pipeline.
 
 This is an independent study, not a URA product.
 
@@ -27,8 +28,9 @@ Three kinds of change overlap here:
 
 ## Headline findings
 
-Jurong East had 72,950 residents in 2025, 25 % of them aged 65 or over. All figures come from
-[`outputs/summary.json`](outputs/summary.json) and the CSVs next to it. "Median" means the median of the 32
+Jurong East had 72,950 residents in 2025, 25 % of them aged 65 or over. That is the SingStat planning-area total;
+SingStat rounds subzone figures separately and they sum to 72,960, the base used for shares below. All figures come
+from [`outputs/summary.json`](outputs/summary.json) and the CSVs next to it. "Median" means the median of the 32
 planning areas with at least 10,000 residents.
 
 | Finding | Jurong East | Median |
@@ -44,18 +46,22 @@ planning areas with at least 10,000 residents.
 - **Hawker centres.** Coverage is well above the median overall, but Toh Guan (13,510 residents) has none within
   800 m.
 - **Community clubs.** Only 2 % of Toh Guan residents are within 800 m of one. A club at the planned Jurong Gateway
-  Hub would lift that to 4 %, because the hub is still a 1.3 km walk away.
+  Hub would lift that to 4 %: 96 % of Toh Guan residents would still be more than 800 m from any club.
 - **Parks.** Estate parks are everywhere. Large parks are not: Jurong Lake Gardens sits at the western edge, so
   the NParks-managed measure is the lowest of the 32.
 - **Combined gaps.** 32,700 residents (45 %) are beyond the threshold for at least two of five neighbourhood
   facilities: hawker centre, clinic, community club, zoned park and primary school (1 km).
-- **Zoning change.** MP2019 to MP2025 raised permissible GFA from 1,660 to 1,786 ha (+7.6 %). It turned 19.8 ha
-  of reserve land at Jalan Papan and 3.6 ha in Toh Guan into residential land. 112 ha, including 76 ha of the
-  Lakeside (Business) core, has no published GPR (SDP).
-- **Scenario.** Building the four unoccupied residential plots at local densities adds about 31,600 residents; plan
-  capacity is 59,900. Most of the new homes would be at Jalan Papan, beyond walking distance of any hawker centre,
-  community club or primary school, even with direct paths. Teban Gardens Market would become the nearest hawker
-  centre for 45,000 residents, up from 19,400 (+132 %).
+- **Zoning change.** Permissible GFA on land with a numeric GPR rose from 1,660 ha in MP2019 to 1,786 ha in MP2025
+  (+7.6 %, +127 ha). Most of that is land gaining a published GPR, not upzoning. In the parcel comparison, land
+  that went from SDP, EVA or no GPR to a number adds 141.0 ha of GFA, land that lost its number removes 21.2 ha,
+  and land with a number in both plans adds only 9.5 ha. (Changes under 0.25 ha are left out of the parcel table,
+  so these parts sum to +129.4 ha.) MP2025 also turned 19.8 ha of reserve land at Jalan Papan and 3.6 ha in Toh
+  Guan into residential land. 112 ha, including 76 ha of the Lakeside (Business) core, has no published GPR (SDP).
+- **Scenario.** Building the four unoccupied residential plots at local densities adds about 31,600 residents; at
+  plan capacity (100 m² per dwelling, 3.06 persons per household) the same floor area holds 59,900. Most of the
+  new homes would be at Jalan Papan, beyond walking distance of any hawker centre, community club or primary
+  school, even with direct paths. Teban Gardens Market would become the nearest hawker centre for 45,000
+  residents, up from 19,400 (+132 %).
 
 The brief turns these into five recommendations: a neighbourhood centre in the Jalan Papan plan, walking links
 from Jalan Papan to the new stations, Toh Guan facilities at the JRL station, Teban Gardens walking and school review, and park
@@ -65,9 +71,9 @@ connectors to Jurong Lake Gardens.
 
 ## Data
 
-All inputs are public and keyless. `python -m lap.fetch` downloads them and writes
-[`data/sources.csv`](data/sources.csv) with the URL, retrieval time and SHA-256 of every file. Raw files are not
-committed.
+All inputs are public and keyless. `python run_all.py --fetch` downloads them as its first step (or, after
+`pip install -e .`, `python -m lap.fetch` downloads them alone) and writes [`data/sources.csv`](data/sources.csv)
+with the URL, retrieval time, size and SHA-256 of every file. Raw files are not committed.
 
 | Theme | Dataset (publisher) | data.gov.sg id / URL |
 |---|---|---|
@@ -86,7 +92,7 @@ committed.
 | Schools | General information of schools (MOE), postal codes geocoded with the OneMap search API (337/337) | d_688b934f82c1059ed0a6993d2a829089 |
 | Walking network | OpenStreetMap, BBBike extract of Singapore | download.bbbike.org |
 
-**Plan version.** The task brief named Master Plan 2019, but Master Plan 2025 was gazetted on 1 December 2025 and
+**Plan version.** The study started from Master Plan 2019, but Master Plan 2025 was gazetted on 1 December 2025 and
 is the statutory plan now. The study therefore uses:
 
 - MP2025 for current land use, unoccupied residential land and planned stations;
@@ -97,7 +103,7 @@ is the statutory plan now. The study therefore uses:
 
 **Residents.** Each MP2019 subzone's GHS 2025 residents are spread over its residential parcels in proportion to
 parcel area × GPR (landed housing as 1.0; EVA and SDP parcels at their class median). Within each parcel they sit
-on a 25 m lattice, giving 729,716 weighted points island-wide and 9,367 in Jurong East. Point weights add back to
+on a 25 m lattice, giving 9,367 weighted points in Jurong East. Point weights add back to
 the SingStat subzone totals.
 
 **Walking network.**
@@ -129,14 +135,20 @@ are computed for every planning area. Jurong East's value, the median and its ra
 
 - *Plots.* MP2025 residential parcels of at least 2 ha in Jurong East with fewer than 10 residents per ha.
 - *Residents.* Floor area (zoned GPR, or the area's median residential GPR of 2.8 on 75 % of an SDP site) divided
-  by 61.9 m² of zoned residential GFA per resident, the density of Jurong East's existing estates. The upper bound
-  is plan capacity: 100 m² per dwelling and 3.06 persons per household (GHS 2025). The intensified case uses
-  GPR 5.3, the highest residential GPR in the area.
+  by 61.9 m² of zoned residential GFA per resident, the density of Jurong East's existing estates.
+- *Plan capacity.* The same floor area at 100 m² per dwelling and 3.06 persons per household (GHS 2025), i.e.
+  32.7 m² per resident. This is a denser reading, not a ceiling: the sensitivity tables, which also vary GPR and
+  dwelling size, go higher.
+- *Intensified.* GPR 5.3, the highest residential GPR in the area, at the local density. It changes the GPR but
+  keeps the lower density, so it can come out below plan capacity at today's GPR; the two cases are separate
+  tests, not steps on one scale.
 - *Access.* Measured on today's paths and "if connected" (straight line × 1.50, the detour ratio of existing
   homes).
 - *Load.* Each facility's load is the number of residents for whom it is the nearest of its kind.
 
 ## Reproduce
+
+Python 3.11 or later (CI uses 3.11; `pyproject.toml` states the same).
 
 ```bash
 pip install -r requirements.txt
@@ -146,8 +158,10 @@ python tests/mutate.py           # mutation check
 ```
 
 `run_all.py` rebuilds `outputs/`, `report/figures/` and `report/brief.pdf`. The PDF step needs a Chromium-family
-browser (Edge or Chrome) and is skipped without one. The brief text is written by hand from the outputs, and
-`tests/test_report_numbers.py` fails if any headline number in it or in this README no longer matches them.
+browser (Edge or Chrome) and is skipped without one. The brief text is written by hand from the outputs.
+`tests/test_report_numbers.py` checks every number in this README's opening lines and *Headline findings* against
+the outputs, each anchored to its sentence or table row, and fails on any number there that no check covers. In the
+brief it checks a fixed list of headline numbers, not every number.
 
 ```
 src/lap/   fetch, config, network, population, landuse, amenities, access, ratios, scenario, pipeline,
@@ -161,13 +175,15 @@ outputs/   result tables and summary.json        report/   brief.md, brief.pdf, 
 - **Unit tests.** `tests/test_core.py` checks every computational step on small hand-built inputs with
   hand-worked answers. Inputs are deliberately asymmetric, so that a swapped term or a dropped weight changes the
   result.
-- **Mutation check.** `tests/mutate.py` plants 28 specific bugs, one at a time, and requires the suite to fail on
+- **Mutation check.** `tests/mutate.py` plants 30 specific bugs, one at a time, and requires the suite to fail on
   each. Examples: `<=` turned into `<`, a dropped join distance, an unweighted share, a wrong age band, a reversed
-  rank. It refuses to start unless the untouched suite passes, and it counts a bug as caught only when tests
-  actually fail, not when collection errors.
+  rank. It refuses to start unless the untouched suite passes. It counts a bug as caught only when at least one test
+  fails and nothing errors; a mutant that causes a collection, import or setup error is reported as invalid and
+  fails the check (`tests/test_harness.py` covers this rule).
 - **Proof that the check can fail.** Before relying on it, it was run against a deliberately weakened suite and
   reported survivors with a non-zero exit (see *Mutation check log* below).
-- **CI.** CI runs the tests and the mutation check on every push.
+- **CI.** On every push, CI runs the tests on Ubuntu and Windows (Python 3.11) and the mutation check on Ubuntu.
+  It checks the code and the committed outputs; it does not download the data or rerun the pipeline.
 
 ## Limits
 
@@ -197,7 +213,8 @@ baseline: 89 tests pass
 0/1 mutants killed            -> exit 1
 ```
 
-With the real test restored, the same mutant is killed (exit 0). The full run of all 28 mutants is part of CI.
+With the real test restored, the same mutant is killed (exit 0). The full run of all mutants is part of CI.
 The first CI run caught a real weakness: mutant 24 (rank order reversed) survived, because the test's study area
 ranked in the middle under either order. The test now also checks an area that ranks first, and all 28 mutants
-are killed.
+of that list were killed. Two mutants added later (the weighted median and the GFA-change split) bring the list
+to 30.

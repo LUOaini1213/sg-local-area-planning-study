@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+from html import escape as html_escape
 from pathlib import Path
 
 import markdown
@@ -15,6 +16,7 @@ import markdown
 from .config import ROOT
 
 REPORT = ROOT / "report"
+TITLE = "Jurong East: Local Area Planning Brief"     # fallback when brief.md has no level-1 heading
 CSS = """
 @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
 body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 9.3pt; line-height: 1.38;
@@ -30,6 +32,7 @@ th, td { border-bottom: 0.6pt solid #d4d2cc; padding: 2.5pt 6pt; text-align: lef
 th { border-bottom: 1pt solid #52514e; }
 img { max-width: 100%; max-height: 98mm; width: auto; display: block; margin: 4pt auto 0 auto; page-break-inside: avoid; }
 p:has(> img) { page-break-inside: avoid; margin-bottom: 2pt; }
+p:has(+ table) { page-break-after: avoid; break-after: avoid; }
 .cap { font-size: 8pt; color: #52514e; margin: 2pt 0 8pt 0; text-align: center; }
 code { font-size: 8.4pt; }
 """
@@ -41,7 +44,12 @@ def to_html(md_text):
     import re
     html = re.sub(r'<p><img alt="([^"]*)" src="([^"]*)" /></p>',
                   r'<p><img alt="\1" src="\2" /></p><p class="cap">\1</p>', html)
-    return f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS}</style></head><body>{html}</body></html>"
+    title = TITLE
+    m = re.search(r"^# (.+)$", md_text, re.M)
+    if m:
+        title = m.group(1).strip()
+    return (f"<!doctype html><html><head><meta charset='utf-8'><title>{html_escape(title)}</title>"
+            f"<style>{CSS}</style></head><body>{html}</body></html>")
 
 
 def browser():

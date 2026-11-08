@@ -148,6 +148,15 @@ def test_share_within_inclusive_and_weighted():
     assert access.share_within([500], [1], 400) == 0.0
 
 
+def test_weighted_median():
+    # sorted values 100, 300, 900 with weights 1, 1, 5: half of 7 is 3.5, first reached at 900
+    assert access.weighted_median([900, 100, 300], [5, 1, 1]) == 900.0
+    # weights 3, 1, 1: half of 5 is 2.5, already reached at 100
+    assert access.weighted_median([900, 100, 300], [1, 3, 1]) == 100.0
+    # equal weights: lower median of an even count
+    assert access.weighted_median([4, 1, 3, 2], [1, 1, 1, 1]) == 2.0
+
+
 def test_coverage_table_groups():
     o = pd.DataFrame({"sz": ["A", "A", "B"], "residents": [3.0, 1.0, 5.0]})
     d = pd.DataFrame({"hawker": [100.0, 900.0, 900.0]})
@@ -253,6 +262,19 @@ def test_subzone_gfa_and_split_parcel():
     assert t.loc["A", "share_Residential"] == pytest.approx(0.5)
     assert t.loc["B", "share_Transport"] == pytest.approx(0.25)
     assert t.loc["B", "land_ha"] == pytest.approx(2.0)
+
+
+def test_gfa_change_split():
+    ch = pd.DataFrame({"gpr2019": ["2.8", "SDP", "EVA", "4.2", "NA", "3.0"],
+                       "gpr2025": ["5.3", "6.3", "2.5", "EVA", "NA", "2.0"],
+                       "ha": [2.0, 1.0, 4.0, 0.5, 9.0, 1.5]})
+    s = landuse.gfa_change_split(ch)
+    # both numeric: 2.0 x (5.3 - 2.8) = 5.0 and 1.5 x (2.0 - 3.0) = -1.5 -> 3.5 (a downzoning counts against)
+    assert s["both_numeric"] == pytest.approx(3.5)
+    # gained a number: 1.0 x 6.3 + 4.0 x 2.5 = 16.3; the NA -> NA row adds nothing
+    assert s["gained_gpr"] == pytest.approx(16.3)
+    # lost its number: -(0.5 x 4.2) = -2.1
+    assert s["lost_gpr"] == pytest.approx(-2.1)
 
 
 # ----------------------------------------------------------------------------- population

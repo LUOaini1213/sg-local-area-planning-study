@@ -110,3 +110,23 @@ def subzone_table(cut):
             out.index).fillna(0) / 1e4
     out["gfa_per_land_m2"] = out.gfa_potential_m2 / (out.land_ha * 1e4)
     return out
+
+
+def gfa_change_split(changes):
+    """Split the change in permissible GFA (ha of floor area) between two plans into three parts.
+
+    changes: one row per piece of land whose zoning changed, with columns gpr2019 and gpr2025 (GPR codes as
+    published) and ha (land area). Because the GFA total counts numeric-GPR parcels only, its change mixes real
+    upzoning with land entering or leaving the numeric set:
+      both_numeric  land with a numeric GPR in both plans: ha x (GPR 2025 - GPR 2019);
+      gained_gpr    land that went from SDP / EVA / LND / none to a number: + ha x GPR 2025;
+      lost_gpr      land that went from a number to SDP / EVA / LND / none: - ha x GPR 2019.
+    """
+    a = changes.gpr2019.map(gpr_value).astype(float)
+    b = changes.gpr2025.map(gpr_value).astype(float)
+    ha = changes.ha.astype(float)
+    return {
+        "both_numeric": float((ha * (b - a))[a.notna() & b.notna()].sum()),
+        "gained_gpr": float((ha * b)[a.isna() & b.notna()].sum()),
+        "lost_gpr": float(-(ha * a)[a.notna() & b.isna()].sum()),
+    }

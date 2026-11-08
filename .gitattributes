@@ -1,0 +1,5 @@
+# Text files are stored with LF; result binaries are never converted.
+* text=auto eol=lf
+*.png -text
+*.pdf -text
+*.parquet -text

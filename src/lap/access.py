@@ -79,6 +79,15 @@ def share_within(dist, weight, threshold):
     return float(weight[dist <= threshold].sum() / tot) if tot > 0 else float("nan")
 
 
+def weighted_median(values, weight):
+    """Lower weighted median: the smallest value at which the cumulative weight reaches half the total."""
+    values = np.asarray(values, dtype=float)
+    weight = np.asarray(weight, dtype=float)
+    order = np.argsort(values, kind="stable")
+    cw = np.cumsum(weight[order])
+    return float(values[order][np.searchsorted(cw, cw[-1] / 2)])
+
+
 def coverage_table(origins, dist, thresholds, by):
     """Share of residents within each kind's threshold, grouped by column `by` of origins."""
     rows = []

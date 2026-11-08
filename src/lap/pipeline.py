@@ -104,6 +104,8 @@ def run():
     sz, pa = boundaries()
     summary = {}
     tables, cuts, chg = step_landuse(sz)
+    # GFA change by kind: upzoning of numeric-GPR land vs land entering or leaving the numeric GPR set
+    summary["gfa_change_split_ha"] = landuse.gfa_change_split(chg)
     net = walk_network()
     summary["network"] = {"nodes_kept": int(net.n), "share_nodes_in_largest_component": round(net.share_kept, 4)}
     o = origins(sz)
@@ -133,6 +135,10 @@ def run():
                         "residents": o.residents[mask0].to_numpy()})
     cov_sz["within_cc_with_hub"] = access.coverage_table(tmp, tmp[["cc_with_hub"]], {"cc_with_hub": 800},
                                                          "subzone").set_index("subzone").within_cc_with_hub
+    d_hub_only = net.distance_to_points(xy0, np.c_[hub.geometry.x, hub.geometry.y])
+    tg = (tmp.subzone == "TOH GUAN").to_numpy()
+    summary["median_walk_toh_guan_to_jurong_gateway_hub_m"] = access.weighted_median(d_hub_only[tg],
+                                                                                     tmp.residents[tg])
     cov_sz.to_csv(OUT / "access_subzone.csv", float_format="%.4f")
 
     # sensitivity of the 10-minute amenities
@@ -187,6 +193,7 @@ def run():
         "residents_study_area": float(oj.residents.sum()),
         "residents_island": float(o.residents.sum()),
         "origin_points_study_area": int(len(oj)),
+        "origin_points_island": int(len(o)),
         "residents_snapped_beyond_150m": snapped_far,
         "coverage_study_area": {k: access.share_within(dj[k], oj.residents, t) for k, t in thr.items()},
         "coverage_mrt_future": access.share_within(dj["mrt_future"], oj.residents, THRESHOLD_M["mrt_exit"]),
