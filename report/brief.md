@@ -9,7 +9,7 @@ Cross Island Line (CRL) stations in Master Plan 2025 would lift this to 80 %. Tw
 remaining gaps. Toh Guan has no hawker centre and no community club within 800 m. Teban Gardens has no primary
 school within 1 km and no station within 800 m until the JRL opens. The plan also zones about 66 ha of residential
 land that housed no one in 2025, mostly at Jalan Papan in the Jurong River subzone. Built at local densities, that
-land would add about 32,000 residents (up to 60,000 at full plan capacity), most of them beyond walking distance of
+land would add about 32,000 residents (about 60,000 at plan capacity), most of them beyond walking distance of
 any existing hawker centre, community club or primary school. It is the area's main planning opportunity and its main risk.
 
 ## 1. Context
@@ -56,9 +56,12 @@ built.
 | Permissible floor area (ha of GFA) | 1,660 | 1,786 | +7.6 % |
 | Residential share (ha of GFA) | 604 | 648 | +7.1 % |
 
-These totals cover only parcels with a numeric GPR. 112 ha has no published GPR (code SDP, "subject to detailed
-planning"), including 76 ha of Lakeside (Business). The floor-area potential of the district core therefore cannot
-be read from the Master Plan data.
+These totals cover only parcels with a numeric GPR, so the +7.6 % is mostly land gaining a published GPR rather than
+upzoning. In the parcel comparison, land that went from SDP, EVA or no GPR to a number adds 141.0 ha of GFA, land
+that lost its number removes 21.2 ha, and land with a number in both plans adds only 9.5 ha (changes under 0.25 ha
+are left out of the parcel table, so the parts sum to +129.4 ha). 112 ha has no published GPR (code SDP, "subject
+to detailed planning"), including 76 ha of Lakeside (Business). The floor-area potential of the district core
+therefore cannot be read from the Master Plan data.
 
 **What changed between plans.** The parcel-level comparison (`outputs/zoning_changes_mp2019_mp2025.csv`) shows four
 moves:
@@ -98,7 +101,7 @@ Figure 5 compares Jurong East with the 31 other planning areas that have at leas
     50 %, well above the island median of 26 %, so this is a local gap rather than an area-wide shortage.
 - Community clubs: 2 % of Toh Guan residents are within 800 m, against 36 % for Jurong East and a median of 39 %.
 - The planned Jurong Gateway Hub does not close this gap. Adding a community club at its Master Plan location
-    raises Toh Guan's coverage only to 4 %: the hub is still a 1.3 km walk from the typical Toh Guan home.
+    raises Toh Guan's coverage only to 4 %: 96 % of Toh Guan residents would still be more than 800 m from any club.
 
 **3.3 Teban Gardens: schools and rail.**
 
@@ -153,13 +156,15 @@ today. Their station areas are natural places for the facilities those subzones 
 
 - Residents per hectare of floor area follow the area's own pattern. Existing Jurong East estates hold one resident
     per 61.9 m² of zoned residential GFA, since older blocks fall short of their zoned GPR.
-- Plan capacity (100 m² GFA per dwelling, 3.06 persons per household, SingStat GHS 2025) is the upper bound.
+- Plan capacity (100 m² GFA per dwelling, 3.06 persons per household, SingStat GHS 2025; 32.7 m² per resident) is
+    a denser reading of the same floor area, not a ceiling: the sensitivity tables go higher.
 - SDP plots take the area's median residential GPR (2.8) on 75 % of the site.
-- The intensified case raises every plot to the highest residential GPR in the area (5.3).
+- The intensified case raises every plot to the highest residential GPR in the area (5.3) at the local density,
+    so it can fall below plan capacity: the two are separate tests, not steps on one scale.
 
 **Results.**
 
-| Plot | Area | GPR (MP2025) | New residents, central | Plan capacity | Intensified (GPR 5.3) |
+| Plot | Area | GPR (MP2025) | Central, local density | Plan capacity | GPR 5.3, local density |
 |---|---:|---|---:|---:|---:|
 | P1 Jalan Papan | 38.0 ha | 3.5 | 21,500 | 40,700 | 32,500 |
 | P2 Jalan Papan | 21.2 ha | SDP | 7,200 | 13,600 | 13,600 |
