@@ -1,10 +1,12 @@
 """Mutation check: every deliberate bug below must make the test suite fail.
 
 Procedure:
-  1. run the untouched suite; it must pass and collect at least one test (a collection error is not a 'kill');
+  1. run the untouched suite; it must pass, collect at least one test and report no errors;
   2. for each mutant, assert the original snippet occurs exactly once, apply it, check the module still compiles,
      run pytest, restore the file;
-  3. exit 1 if any mutant survives (tests still pass) or any snippet is missing.
+  3. classify the run from pytest's exit code and final summary line (see classify()): 'killed' only when at least
+     one test failed and nothing errored; a collection, import or setup error is 'INVALID', not a kill;
+  4. exit 1 if any mutant survives (tests still pass), is invalid, or has a missing snippet.
 Run: python tests/mutate.py            (add -v to see pytest output for survivors, --only 3,7 to run a subset)
 """
 import py_compile
@@ -38,9 +40,11 @@ MUTANTS = [
     ("access.py", "weights=np.asarray(weights)[olab >= 0]", "weights=None"),
     ("access.py", "out[i] = w[tot <= limit].sum()", "out[i] = w[tot < limit].sum()"),
     ("access.py", "return float(np.median(n[ok] / s[ok]))", "return float(np.mean(n[ok] / s[ok]))"),
+    ("access.py", "np.searchsorted(cw, cw[-1] / 2)", "np.searchsorted(cw, len(cw) / 2)"),
     ("landuse.py", 'return v if v > 0 else float("nan")', "return v"),
     ("landuse.py", "/ math.log(len(ACTIVITY))))", "/ math.log(len(ACTIVITY) + 1)))"),
     ("landuse.py", 'cut["gfa_m2"] = cut.area_m2 * cut.gpr', 'cut["gfa_m2"] = cut.area_m2 * cut.gpr.fillna(1.0)'),
+    ("landuse.py", '"lost_gpr": float(-(ha * a)', '"lost_gpr": float((ha * a)'),
     ("population.py", "rec[band] = sum(vals[k] for k in keys)", "rec[band] = vals[keys[0]]"),
     ("population.py", 'g = g.where(lu.GPR.astype(str).str.strip() != "LND", 1.0)', "g = g"),
     ("population.py", 'cut["w"] = cut.w * cut.area / cut.a0', 'cut["w"] = cut.w'),
@@ -60,14 +64,35 @@ def pytest_run():
     return r.returncode, r.stdout + r.stderr
 
 
+def summary_counts(out):
+    """Counts from pytest's final summary line, e.g. '1 failed, 88 passed in 5.20s' -> {'failed': 1, 'passed': 88}."""
+    lines = re.findall(r"^[= ]*((?:\d+ [a-z]+(?:, )?)+) in [\d.]+s\b", out, re.M)
+    if not lines:
+        return {}
+    counts = {}
+    for n, kind in re.findall(r"(\d+) ([a-z]+)", lines[-1]):
+        counts[{"errors": "error", "warning": "warnings"}.get(kind, kind)] = int(n)
+    return counts
+
+
+def classify(code, out):
+    """'killed' (a test failed, nothing errored), 'survived' (suite passed) or 'invalid' (anything else, such as a
+    collection or import error, which says the mutant broke the module rather than that a test caught the bug)."""
+    c = summary_counts(out)
+    if code == 0 and c.get("passed", 0) > 0 and not c.get("error") and not c.get("failed"):
+        return "survived"
+    if code == 1 and c.get("failed", 0) > 0 and not c.get("error"):
+        return "killed"
+    return "invalid"
+
+
 def main(verbose=False):
     code, out = pytest_run()
-    m = re.search(r"(\d+) passed", out)
-    if code != 0 or not m:
+    if classify(code, out) != "survived":
         print("unmutated suite does not pass cleanly; mutation check aborted\n", out[-2000:])
         return 1
-    print(f"baseline: {m.group(1)} tests pass")
-    survivors, missing = [], []
+    print(f"baseline: {summary_counts(out)['passed']} tests pass")
+    survivors, missing, invalid = [], [], []
     only = None
     if "--only" in sys.argv:
         only = {int(x) for x in sys.argv[sys.argv.index("--only") + 1].split(",")}
@@ -75,26 +100,29 @@ def main(verbose=False):
         if only and i not in only:
             continue
         path = SRC / fname
-        text = path.read_text(encoding="utf-8")
+        raw = path.read_bytes()                       # restored byte for byte (keeps LF on Windows)
+        text = raw.decode("utf-8")
         if text.count(old) != 1:
             missing.append((i, fname, old))
             print(f"[{i:02d}] {fname}: snippet found {text.count(old)} times - SKIPPED (counts as failure)")
             continue
         try:
-            path.write_text(text.replace(old, new), encoding="utf-8")
+            path.write_bytes(text.replace(old, new).encode("utf-8"))
             py_compile.compile(str(path), doraise=True)
             code, out = pytest_run()
         finally:
-            path.write_text(text, encoding="utf-8")
-        killed = code != 0 and ("failed" in out or "error" in out.lower())
-        print(f"[{i:02d}] {fname}: {'killed' if killed else 'SURVIVED'}  ({old[:60]!r})")
-        if not killed:
-            survivors.append((i, fname, old))
+            path.write_bytes(raw)
+        verdict = classify(code, out)
+        label = {"killed": "killed", "survived": "SURVIVED", "invalid": "INVALID (error, not a test failure)"}
+        print(f"[{i:02d}] {fname}: {label[verdict]}  ({old[:60]!r})")
+        if verdict != "killed":
+            (survivors if verdict == "survived" else invalid).append((i, fname, old))
             if verbose:
                 print(out[-1500:])
     total = len(only) if only else len(MUTANTS)
-    print(f"\n{total - len(survivors) - len(missing)}/{total} mutants killed")
-    return 1 if (survivors or missing) else 0
+    print(f"\n{total - len(survivors) - len(missing) - len(invalid)}/{total} mutants killed"
+          + (f"; {len(invalid)} invalid" if invalid else ""))
+    return 1 if (survivors or missing or invalid) else 0
 
 
 if __name__ == "__main__":
